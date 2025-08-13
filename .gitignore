@@ -1,0 +1,68 @@
+# ------------------------------
+# Python
+# ------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# Virtual environments
+env/
+venv/
+.venv/
+*.env
+*.conda/
+*.conda_env
+*.egg-info/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# ------------------------------
+# Data & outputs
+# ------------------------------
+data/
+datasets/
+*.npy
+*.npz
+*.csv
+*.h5
+*.nii
+*.nii.gz
+*.mha
+*.mhd
+
+# Model weights and checkpoints
+*.pth
+*.pt
+*.ckpt
+*.onnx
+checkpoints/
+models/*_checkpoints/
+
+# Logs & cache
+logs/
+wandb/
+lightning_logs/
+*.log
+*.txt
+*.out
+*.err
+*.tmp
+*.temp
+
+# ------------------------------
+# VS Code / IDE
+# ------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ------------------------------
+# System files
+# ------------------------------
+.DS_Store
+Thumbs.db
