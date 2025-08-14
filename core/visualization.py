@@ -46,3 +46,36 @@ def visualize_sspdpm(noisy, pred, clean, z, stem, vmax, SAVE_DIR):
     plt.tight_layout()
     plt.savefig(os.path.join(SAVE_DIR, f"{stem}_cmp.png"), dpi=200)
     plt.close()
+    
+# osem sspdpm
+def take_slice(vol, axis=0, idx=None):
+    if idx is None:
+        idx = vol.shape[axis] // 2
+    if axis == 0:   return vol[idx, :, :]
+    elif axis == 1: return vol[:, idx, :]
+    else:           return vol[:, :, idx]
+
+def visualize_triplet(pred_np, gt_np, noisy_np, save_path, axis=0, slice_index=None):
+    slices = [
+        take_slice(noisy_np, axis, slice_index),
+        take_slice(gt_np, axis, slice_index),
+        take_slice(pred_np, axis, slice_index)
+    ]
+    titles = ["Noisy Input", "Ground Truth", "Prediction"]
+
+    vmin = min(sl.min() for sl in slices)
+    vmax = max(sl.max() for sl in slices)
+
+    fig, axs = plt.subplots(1, 3, figsize=(13, 4), constrained_layout=True)
+    ims = []
+    for ax, img, title in zip(axs, slices, titles):
+        im = ax.imshow(img, cmap='gray', vmin=vmin, vmax=vmax)
+        ax.set_title(title)
+        ax.axis('off')
+        ims.append(im)
+
+    cbar = fig.colorbar(ims[0], ax=axs, shrink=0.85, location='right', aspect=35, pad=0.02)
+    cbar.ax.set_ylabel('Counts', rotation=270, labelpad=15)
+
+    plt.savefig(save_path, dpi=300)
+    plt.close()
