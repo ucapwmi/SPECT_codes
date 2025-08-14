@@ -51,3 +51,8 @@ def make_data_list_fine_tuning(root_dir, phase):
     if len(data_list)==0:
         raise RuntimeError(f"No samples found in {phase_dir}!")
     return data_list
+
+def make_list_sspdpm(split,ROOT):
+    files = sorted(glob(os.path.join(ROOT, split, "clean_sino", "clean_*.npy")))
+    return [{"path": p} for p in files]  
+

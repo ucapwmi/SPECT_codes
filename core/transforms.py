@@ -83,3 +83,26 @@ class TestNPYDataset(Dataset):
     def __len__(self): return len(self.files)
     def __getitem__(self, idx):
         return self.transform(self.files[idx])
+    
+# transforms for single-step pdpm
+
+class LoadNPY_pdpm(MapTransform):
+    def __init__(self, keys):
+        super().__init__(keys)
+
+    def __call__(self, data):
+        d   = dict(data)
+        arr = np.load(d[self.keys[0]]).astype(np.float32)
+        m   = max(arr.max(), 1e-6)               # max-norm
+        arr = np.clip(arr / m * 255.0, 0, 255).astype(np.uint8)
+        d["img"] = arr                          # uint8 → Tensor
+        return d
+    
+def add_channel_pdpm(x):                 # -> [1,D,H,W]
+    return x[np.newaxis] if x.ndim == 3 else x
+
+transform_pdpm = Compose([
+    LoadNPY_pdpm(keys=["path"]),
+    Lambdad(keys=["img"], func=add_channel_pdpm),
+    ToTensord(keys=["img"])
+])

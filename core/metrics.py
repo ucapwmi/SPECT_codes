@@ -40,3 +40,12 @@ def combined_loss(pred_cnt, gt_cnt, alpha=0.5, eps=1e-8):
     mse_part  = mse_loss(pred_norm, gt_norm)
     ssim_part = ssim_unit(pred_norm, gt_norm)
     return alpha * mse_part + (1 - alpha) * ssim_part
+
+mse_loss_pdpm = nn.MSELoss(reduction="none")
+def per_img_mse(pred, target):
+    """Per-image 3D volume mean MSE → [B]"""
+    return mse_loss_pdpm(pred, target).mean(dim=(1, 2, 3, 4))
+
+def loss_fn(pred, target, w):
+    """batch weighted MSE"""
+    return (per_img_mse(pred, target) * w).mean()
