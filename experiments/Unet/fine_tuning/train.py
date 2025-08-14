@@ -1,4 +1,4 @@
-from experiments.Unet.fine_tuning.data import make_data_list
+from core.data import make_data_list_fine_tuning as make_data_list
 from core.transforms import build_transforms
 from models.Unet.model import CustomUNet3D
 from core.metrics import compute_psnr_volume, ssim_metric, combined_loss, mse_loss
