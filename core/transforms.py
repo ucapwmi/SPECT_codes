@@ -3,7 +3,7 @@ from monai.transforms import (
     Compose, ToTensord, MapTransform, Lambdad,
     RandFlipd, RandRotate90d, Rand3DElasticd,
 )
-
+from torch.utils.data import Dataset
 class LoadNPYd(MapTransform):
     """
     read one .npy file and return a numpy.ndarray (D, H, W)
@@ -69,3 +69,17 @@ def build_transforms(split: str) -> Compose:
 
     base.append(ToTensord(keys=["input","label","scale"]))
     return Compose(base)
+
+class TestNPYDataset(Dataset):
+    def __init__(self, file_list):
+        self.files = file_list
+        self.transform = Compose([
+            LoadNPYd(keys=["input", "label"]),
+            Lambdad(keys=["input", "label"], func=lambda x: x[np.newaxis, ...]),
+            SaveMeand(keys=["input"]),
+            DivideByScaled(keys=["input", "label"]),
+            ToTensord(keys=["input", "label", "scale"]),
+        ])
+    def __len__(self): return len(self.files)
+    def __getitem__(self, idx):
+        return self.transform(self.files[idx])

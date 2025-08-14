@@ -1,7 +1,7 @@
 from experiments.Unet.fine_tuning.data import make_data_list
 from core.transforms import build_transforms
 from models.Unet.model import CustomUNet3D
-from core.metrics import compute_psnr_volume, ssim_metric, ssim_unit, combined_loss, mse_loss
+from core.metrics import compute_psnr_volume, ssim_metric, combined_loss, mse_loss
 from monai.data import CacheDataset
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import torch
