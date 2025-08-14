@@ -63,7 +63,7 @@ lr_scheduler = ReduceLROnPlateau(
 )
 history = {"train": [], "val": [], "ssim": [], "mse": []}
 best_val, stall, patience, num_epochs = np.inf, 0, 5, 60
-ckpt_dir = "models/Single_step_PDPM"
+ckpt_dir = "models/Single_step_PDPM_checkpoints"
 os.makedirs(ckpt_dir, exist_ok=True)
 
 for epoch in range(1, num_epochs + 1):

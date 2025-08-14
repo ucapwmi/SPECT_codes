@@ -1,5 +1,6 @@
 import os
 import matplotlib.pyplot as plt
+from matplotlib import gridspec
 
 def visualize_predictions(pred_np, gt_np, inp_np,
                           save_dir, sample_name,
@@ -28,4 +29,20 @@ def visualize_predictions(pred_np, gt_np, inp_np,
     plt.savefig(os.path.join(save_dir,
                 f"{sample_name}_axis{axis}_slice{slice_index}.png"),
                 dpi=300)
+    plt.close()
+
+def visualize_sspdpm(noisy, pred, clean, z, stem, vmax, SAVE_DIR):             
+    fig = plt.figure(figsize=(12, 4))
+    gs  = gridspec.GridSpec(1, 4, width_ratios=[1,1,1,0.04], wspace=0.05)
+    axes = [fig.add_subplot(gs[i]) for i in range(3)]
+    ims  = []
+    for ax, img, title in zip(
+            axes, [noisy[z], pred[z], clean[z]], ["Noisy", "Predict", "Clean"]):
+        im = ax.imshow(img, cmap="gray", vmin=0, vmax=vmax)   
+        ims.append(im)
+        ax.set_title(title); ax.axis("off")
+    cax = fig.add_subplot(gs[3])
+    fig.colorbar(ims[0], cax=cax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(SAVE_DIR, f"{stem}_cmp.png"), dpi=200)
     plt.close()
