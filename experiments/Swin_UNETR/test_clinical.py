@@ -1,5 +1,3 @@
-import os
-import re
 import torch
 import numpy as np
 from glob import glob
