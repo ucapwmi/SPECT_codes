@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 
-class DoseEmbedding(nn.Module):
+class CountEmbedding(nn.Module):
     def __init__(self, dim=64, max_period=10000.0):
         super().__init__()
         half = dim // 2
@@ -55,7 +55,7 @@ class UpBlock(nn.Module):
 class UNet3D_PDPM(nn.Module):
     def __init__(self, base=32, emb_dim=64):
         super().__init__()
-        self.dose = DoseEmbedding(dim=emb_dim)
+        self.count = CountEmbedding(dim=emb_dim)
         self.enc1, self.p1 = ConvBlock(1, base), nn.MaxPool3d(2)
         self.enc2, self.p2 = ConvBlock(base, base*2), nn.MaxPool3d(2)
         self.enc3, self.p3 = ConvBlock(base*2, base*4), nn.MaxPool3d(2)
