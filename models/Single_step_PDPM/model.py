@@ -69,7 +69,7 @@ class UNet3D_PDPM(nn.Module):
         self.proj = nn.Linear(emb_dim, base)
 
     def forward(self, x, r):
-        emb = self.dose(r).view(x.size(0), -1)
+        emb = self.count(r).view(x.size(0), -1)
         emb = self.proj(emb).view(x.size(0), -1, 1, 1, 1)
 
         e1 = self.enc1(x) + emb
