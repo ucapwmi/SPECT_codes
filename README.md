@@ -20,6 +20,7 @@ pip install -r requirements.txt
 ```
 
 ## 2) Repository layout (key folders)
+```
 .
 ├── core/                # data I/O, transforms, metrics, utilities (project core)
 ├── experiments/         # runnable entry points (python -m ...)
@@ -42,8 +43,10 @@ pip install -r requirements.txt
 ├── models/              # network definitions, checkpoints
 ├── requirements.txt
 └── README.md
+```
 
 ## 3) Data
+```
 data/
   dataset/
     test/
@@ -90,3 +93,33 @@ data/
     volume/
         pred_sino/
     segmentations/
+```
+
+## 4) How to run
+
+All commands are executed from the repo root.
+
+### 4.1 3D U-Net (image domain)
+``` bash
+python3 -m experiments.Unet.pre_training.train
+python3 -m experiments.Unet.fine_tuning.train
+python3 -m experiments.Unet.test
+python3 -m experiments.Unet.test_clinical
+```
+
+### 4.2 Swin UNETR (image domain)
+``` bash
+python3 -m experiments.Swin_UNETR.pre_training.train
+python3 -m experiments.Swin_UNETR.fine_tuning.train
+python3 -m experiments.Swin_UNETR.test
+python3 -m experiments.Swin_UNETR.test_clinical
+```
+
+### Single-Step PDPM (projection / sinogram domain)
+``` bash
+python3 -m experiments.Single_step_PDPM.pre_training.train
+python3 -m experiments.Single_step_PDPM.fine_tuning.train
+python3 -m experiments.Single_step_PDPM.test_sino
+python3 -m experiments.Single_step_PDPM.test_osem
+python3 -m experiments.Single_step_PDPM.test_clinical
+```
