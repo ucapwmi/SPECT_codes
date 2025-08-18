@@ -42,7 +42,7 @@ for idx, (pred_path, gt_path, noisy_path) in enumerate(zip(pred_files, gt_files,
     gt_np    = np.load(gt_path).astype(np.float32)
     noisy_np = np.load(noisy_path).astype(np.float32)
 
-    # scale（和原脚本一致）
+    # scale
     scale = max(gt_np.mean(), 1e-8)
     pred_cnt = pred_np * scale
     gt_cnt   = gt_np * scale
@@ -64,13 +64,12 @@ for idx, (pred_path, gt_path, noisy_path) in enumerate(zip(pred_files, gt_files,
     ssim_val = 1.0 - ssim_metric(pred_norm, gt_norm).item()
     results[noise_level]["ssim"].append(ssim_val)
 
-    # 保存可视化
+
     save_dir = os.path.join(save_root, noise_level)
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, f"sample{idx}_axis{axis}.png")
     visualize_triplet(pred_np, gt_np, noisy_np, save_path, axis=axis, slice_index=slice_index)
 
-# ===================== 打印结果表格 =====================
 print("\n=== Test Results (mean ± std) ===")
 for noise in ["1.0", "0.5", "0.25", "0.125", "0.05"]:
     mse_mean = np.mean(results[noise]["mse"])

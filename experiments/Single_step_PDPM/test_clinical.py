@@ -15,15 +15,14 @@ random.seed(42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-ckpt_path = "models/Single_step_PDPM/best_sspdpm_xcat.pth"
+ckpt_path = "models/Single_step_PDPM_checkpoints/best_sspdpm_xcat.pth"
 data_root = "data/volume" 
-save_dir = "Single_step_PDPM_visualizations_sino"
+save_dir = "Single_step_PDPM_visualizations_sino_clinical"
 batch_size = 1
 SLICE_IDX = None      #  None == mid slice
-SAVE_PRED_NPY = False
+SAVE_PRED_NPY = True
 PRED_DIR = os.path.join(data_root, "pred_sino")  # save pred results to do osem in SIRF
 os.makedirs(save_dir, exist_ok=True)
-
 if SAVE_PRED_NPY:
     os.makedirs(PRED_DIR, exist_ok=True)
 
