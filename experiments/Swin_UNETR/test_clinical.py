@@ -38,6 +38,7 @@ with torch.no_grad():
         loader = DataLoader(ds, batch_size=1, num_workers=4)
 
         mses, psnrs, ssims = [], [], []
+        sums_gt, sums_noisy, sums_pred = [], [], []
         for i, batch in enumerate(loader):
             inp  = batch["input"].to(device)             
             lbl  = batch["label"].to(device)
@@ -66,7 +67,6 @@ with torch.no_grad():
                     axis=1,
                 )
 
-
             peak = lbl_cnt.max()
             pred_norm = out_cnt / (peak + 1e-8)
             gt_norm   = lbl_cnt / (peak + 1e-8)
@@ -76,7 +76,14 @@ with torch.no_grad():
             psnrs.append(float("inf") if mse_val == 0 else 10 * np.log10(1.0 / mse_val))
             ssims.append(1.0 - ssim_metric(pred_norm, gt_norm).item())
 
-            # visualize
+            s_gt = float(np.sum(gt_np, dtype=np.float64))
+            s_ny = float(np.sum(inp_np, dtype=np.float64))
+            s_pr = float(np.sum(pred_np, dtype=np.float64))
+            sums_gt.append(s_gt)
+            sums_noisy.append(s_ny)
+            sums_pred.append(s_pr)
+            print(f"[sum] noise={noise} sample{i}: GT={s_gt:.6e}, noisy={s_ny:.6e}, pred={s_pr:.6e}")
+
             visualize_predictions(
                 pred_np=pred_np,
                 gt_np=gt_np,
@@ -90,8 +97,10 @@ with torch.no_grad():
             "mse_mean": np.mean(mses), "mse_std": np.std(mses),
             "psnr_mean": np.mean(psnrs), "psnr_std": np.std(psnrs),
             "ssim_mean": np.mean(ssims), "ssim_std": np.std(ssims),
+            "sum_gt_mean": np.mean(sums_gt), "sum_gt_std": np.std(sums_gt),
+            "sum_noisy_mean": np.mean(sums_noisy), "sum_noisy_std": np.std(sums_noisy),
+            "sum_pred_mean": np.mean(sums_pred), "sum_pred_std": np.std(sums_pred),
         }
-
 
 print("\n=== Test Results (mean ± std) ===")
 for noise in ["1.0", "0.5", "0.25", "0.125", "0.05"]:
@@ -101,6 +110,8 @@ for noise in ["1.0", "0.5", "0.25", "0.125", "0.05"]:
             f"Noise={noise:>5} | "
             f"MSE={r['mse_mean']:.6f}±{r['mse_std']:.6f} | "
             f"PSNR={r['psnr_mean']:.2f}±{r['psnr_std']:.2f} dB | "
-            f"SSIM={r['ssim_mean']:.4f}±{r['ssim_std']:.4f}"
+            f"SSIM={r['ssim_mean']:.4f}±{r['ssim_std']:.4f} | "
+            f"GTsum={r['sum_gt_mean']:.3e}±{r['sum_gt_std']:.3e} | "
+            f"Noisysum={r['sum_noisy_mean']:.3e}±{r['sum_noisy_std']:.3e} | "
+            f"Predsum={r['sum_pred_mean']:.3e}±{r['sum_pred_std']:.3e}"
         )
-
