@@ -122,4 +122,5 @@ python3 -m experiments.Single_step_PDPM.fine_tuning.train
 python3 -m experiments.Single_step_PDPM.test_sino
 python3 -m experiments.Single_step_PDPM.test_osem
 python3 -m experiments.Single_step_PDPM.test_clinical
+python3 -m experiments.Single_step_PDPM.test_clinical_osem
 ```
