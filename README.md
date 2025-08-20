@@ -27,32 +27,31 @@ pip install -r requirements.txt
 ## 2) Repository layout (key folders)
 ```
 .
-├── core/                # data I/O, transforms, metrics, utilities (project core)
-├── experiments/         # runnable entry points (python -m ...)
+├── core/                       # data I/O, transforms, metrics, utilities (project core)
+├── experiments/                # runnable entry points (python -m ...)
 │   ├── Unet/
-│   │   ├── pre\_training/train.py
-│   │   ├── fine\_tuning/train.py
+│   │   ├── pre_training/train.py
+│   │   ├── fine_tuning/train.py
 │   │   ├── test.py
-│   │   └── test\_clinical.py
-│   ├── Swin\_UNETR/
-│   │   ├── pre\_training/train.py
-│   │   ├── fine\_tuning/train.py
+│   │   └── test_clinical.py
+│   ├── Swin_UNETR/
+│   │   ├── pre_training/train.py
+│   │   ├── fine_tuning/train.py
 │   │   ├── test.py
-│   │   └── test\_clinical.py
-│   └── Single\_step\_PDPM/
-│       ├── pre\_training/train.py
-│       ├── fine\_tuning/train.py
-│       ├── test\_sino.py        # denoise sinograms
-│       ├── test\_osem.py        # OSEM of denoised sinograms
-        ├── test\_clinical.py
-│       └── test\_clinical_osem.py
-├── models/              # network definitions, checkpoints
+│   │   └── test_clinical.py
+│   └── Single_step_PDPM/
+│       ├── pre_training/train.py
+│       ├── fine_tuning/train.py
+│       ├── test_sino.py        # denoise sinograms
+│       ├── test_osem.py        # OSEM of denoised sinograms
+        ├── test_clinical.py 
+│       └── test_clinical_osem.py
+├── models/                     # network definitions, checkpoints
 ├── requirements.txt
-├── LICENSE              # Apache 2.0 license
-├── NOTICE               # Copyright and attribution info
-├── general.samp.par     # XCAT generation template
+├── LICENSE                     # Apache 2.0 license
+├── NOTICE                      # Copyright and attribution info
+├── general.samp.par            # XCAT generation template
 └── README.md
-
 
 ```
 
