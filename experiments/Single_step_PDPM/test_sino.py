@@ -15,7 +15,7 @@ random.seed(42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-ckpt_path = "models/Single_step_PDPM/best_sspdpm_xcat.pth"
+ckpt_path = "models/Single_step_PDPM_checkpoints/best_sspdpm_xcat.pth"
 data_root = "data/pdpm_dataset_xcat"
 save_dir = "Single_step_PDPM_visualizations_sino"
 batch_size = 1
