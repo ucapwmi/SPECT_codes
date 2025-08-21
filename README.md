@@ -1,7 +1,7 @@
 # Evaluating the Effectiveness of Denoising Using Machine Learning in SPECT
 
 **Author**: Wei Miao  
-**Supervisors**: Kris Thielemans, Gabriel Facini, Cate Gascoigne  
+**Supervisors**: Kris Thielemans, Efstathios Varzakis, Cate Gascoigne  
 **Affiliation**: MSc Scientific and Data Intensive Computing, University College London (UCL)  
 **Project type**: MSc Dissertation (2025)  
 
@@ -167,6 +167,6 @@ python3 -m experiments.Single_step_PDPM.test_clinical_osem
 
 This project builds upon prior work by Cate Gascoigne (MRes thesis, UCL, 2024) on 2D CNNs for SPECT phantom denoising, extending it to 3D architectures, anatomically realistic XCAT phantoms, and transformer-based and diffusion-based models.  
 
-I would like to thank my supervisors Kris Thielemans, Gabriel Facini, and Cate Gascoigne for their guidance and support throughout this project.
+I would like to thank my supervisors Kris Thielemans, Efstathios Varzakis, and Cate Gascoigne for their guidance and support throughout this project.
 
 
