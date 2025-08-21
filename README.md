@@ -23,6 +23,9 @@ python -m venv .venv
 source .venv/bin/activate          # Windows: .\.venv\Scripts\activate
 pip install -r requirements.txt
 ```
+### Prerequisites
+
+- **SIRF v3.7** (STIR backend) — used for dataset simulation and OSEM reconstruction.
 
 ## 2) Repository layout (key folders)
 ```
